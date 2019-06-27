@@ -17,14 +17,14 @@ public class UserService {
 		List<User> userList = new ArrayList<User>();
 		User user1 = new User();
 		user1.setId("1");
-		user1.setName("Ali");
-		user1.setAddress("Penang");
+		user1.setName("Tony Stark");
+		user1.setEmail("ironman@avengers.inc");
 		
 		
 		User user2 = new User();
 		user2.setId("2");
-		user2.setName("Muthu");
-		user2.setAddress("KL");
+		user2.setName("Steve Rogers");
+		user2.setEmail("captan@avengers.inc");
 		
 		userList.add(user1);
 		userList.add(user2);
