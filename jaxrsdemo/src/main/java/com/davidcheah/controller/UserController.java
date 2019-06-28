@@ -14,10 +14,11 @@ public class UserController {
 	private UserService service = new UserService();
 
 	//http://localhost:8080/jaxrsdemo/rest/service/users
+	//http://localhost:8080/jaxrsdemo/users
 	@GET
 	@Path("/users")
 	public List<User> getUsers() {
-		List<User> users = service.retrieveUsers();
+		List<User> users = service.getAllUsers();
 		return users;
 	}
 }
