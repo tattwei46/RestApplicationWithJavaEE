@@ -3,6 +3,7 @@ package com.davidcheah.controller;
 import java.util.List;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -40,5 +41,12 @@ public class UserController {
 	public User addUser(User user) {
 		User newUser= service.add(user);
 		return newUser;
+	}
+	
+	@DELETE
+	@Path("/users/{id}")
+	public User deleteUser(@PathParam("id") int id) {
+		User removedUser = service.delete(id);
+		return removedUser;
 	}
 }
