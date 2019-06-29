@@ -9,7 +9,9 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import com.davidcheah.model.User;
 import com.davidcheah.services.UserService;
@@ -19,34 +21,53 @@ public class UserController {
 
 	private UserService service = new UserService();
 
-	//http://localhost:8080/jaxrsdemo/service/users
+	// http://localhost:8080/jaxrsdemo/service/users
 	@GET
 	@Path("/users")
 	public List<User> getUsers() {
 		List<User> users = service.getAllUsers();
-		return users;
+		if (users.size() > 0)
+			return users;
+		throw new WebApplicationException(Response.Status.NOT_FOUND);
 	}
-	
+
 	@GET
 	@Path("/users/{id}")
 	public User getUser(@PathParam("id") int id) {
 		User user = service.getUser(id);
+		if (user == null) {
+			throw new WebApplicationException(Response.Status.NOT_FOUND);
+		}
 		return user;
 	}
-	
+
 	@POST
 	@Path("/users")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public User addUser(User user) {
-		User newUser= service.add(user);
-		return newUser;
+	public Response addUser(User user) {
+		User newUser = service.add(user);
+		if (newUser == null) {
+			throw new WebApplicationException(Response.Status.NOT_IMPLEMENTED);
+		}
+		String message = "User id " + newUser.getId() + " created.";
+		return Response
+			      .status(Response.Status.CREATED)
+			      .entity(message)
+			      .build();
 	}
-	
+
 	@DELETE
 	@Path("/users/{id}")
-	public User deleteUser(@PathParam("id") int id) {
+	public Response deleteUser(@PathParam("id") int id) {
 		User removedUser = service.delete(id);
-		return removedUser;
+		if (removedUser == null) {
+			throw new WebApplicationException(Response.Status.NOT_FOUND);
+		}
+		String message = "User id " + removedUser.getId() + " removed.";
+		return Response
+			      .status(Response.Status.OK)
+			      .entity(message)
+			      .build();
 	}
 }
