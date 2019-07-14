@@ -48,13 +48,12 @@ public class UserService {
 	}
 
 	public User update(int id, User updatedUser) {
-		for (User user : users) {
-			if (user.getId() == id) {
-				user.setName(updatedUser.getName());
-				user.setEmail(updatedUser.getEmail());
-				return user;
-			}
+		User foundUser = getUser(id);
+		if (foundUser == null || updatedUser == null) {
+			return null;
 		}
+		foundUser.setEmail(updatedUser.getEmail());
+		foundUser.setName(updatedUser.getName());
 		return null;
 	}
 }
