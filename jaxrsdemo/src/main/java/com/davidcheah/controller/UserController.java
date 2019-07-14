@@ -32,6 +32,7 @@ public class UserController {
 		throw new WebApplicationException(Response.Status.NOT_FOUND);
 	}
 
+	// http://localhost:8080/jaxrsdemo/service/users/1
 	@GET
 	@Path("/users/{id}")
 	public User getUser(@PathParam("id") int id) {
@@ -42,10 +43,11 @@ public class UserController {
 		return user;
 	}
 
+	// http://localhost:8080/jaxrsdemo/service/users
 	@POST
 	@Path("/users")
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON) // HTTP Error 415 if not JSON
+	@Produces(MediaType.APPLICATION_JSON) // HTTP Error 406 if not JSON
 	public Response addUser(User user) {
 		User newUser = service.add(user);
 		if (newUser == null) {
@@ -58,6 +60,7 @@ public class UserController {
 			      .build();
 	}
 
+	// http://localhost:8080/jaxrsdemo/service/users/1
 	@DELETE
 	@Path("/users/{id}")
 	public Response deleteUser(@PathParam("id") int id) {
@@ -72,10 +75,11 @@ public class UserController {
 			      .build();
 	}
 	
+	// http://localhost:8080/jaxrsdemo/service/users/1
 	@PUT
 	@Path("/users/{id}")
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON) // HTTP Error 415 if not JSON
+	@Produces(MediaType.APPLICATION_JSON) // HTTP Error 406 if not JSON
 	public Response updateUser(@PathParam("id") int id, User user) {
 		System.out.println("update received");
 		User updateUser = service.update(id, user);

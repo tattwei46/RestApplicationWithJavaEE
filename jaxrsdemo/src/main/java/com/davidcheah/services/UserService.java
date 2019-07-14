@@ -4,9 +4,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-
 import com.davidcheah.model.User;
 
 public class UserService {
