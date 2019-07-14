@@ -6,6 +6,7 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -67,6 +68,23 @@ public class UserController {
 		String message = "User id " + removedUser.getId() + " removed.";
 		return Response
 			      .status(Response.Status.OK)
+			      .entity(message)
+			      .build();
+	}
+	
+	@PUT
+	@Path("/users/{id}")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response updateUser(@PathParam("id") int id, User user) {
+		System.out.println("update received");
+		User updateUser = service.update(id, user);
+		if (updateUser == null) {
+			throw new WebApplicationException(Response.Status.NOT_IMPLEMENTED);
+		}
+		String message = "User id " + updateUser.getId() + " updated.";
+		return Response
+			      .status(Response.Status.CREATED)
 			      .entity(message)
 			      .build();
 	}
